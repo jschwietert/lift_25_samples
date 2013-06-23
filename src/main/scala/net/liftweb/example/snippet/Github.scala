@@ -8,8 +8,8 @@ import xml.NodeSeq
 
 // Github source configuration
 object SourceConfig {
-  def author = Props.get("github.author") openOr "lift"
-  def repo = Props.get("github.repo") openOr "samples"
+  def author = Props.get("github.author") openOr "fmpwizard"
+  def repo = Props.get("github.repo") openOr "lift_25_samples"
   def path = author + "/" + repo
 }
 

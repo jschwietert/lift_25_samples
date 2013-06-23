@@ -201,17 +201,9 @@ class Boot {
     private var poolSize = 0
     private val maxPoolSize = 4
 
-    private lazy val chooseDriver = Props.mode match {
-      case Props.RunModes.Production => "org.apache.derby.jdbc.EmbeddedDriver"
-      case _ => "org.h2.Driver"
-    }
+    private lazy val chooseDriver = "org.h2.Driver"
 
-
-    private lazy val chooseURL = Props.mode match {
-      case Props.RunModes.Production => "jdbc:derby:lift_example;create=true"
-      case _ => "jdbc:h2:mem:lift;DB_CLOSE_DELAY=-1"
-    }
-
+    private lazy val chooseURL = "jdbc:h2:mem:lift;DB_CLOSE_DELAY=-1"
 
     private def createOne: Box[Connection] = {
       try {
