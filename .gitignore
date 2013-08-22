@@ -18,3 +18,8 @@ project/plugins/project/
 *.swp
 
 *~
+
+/RUNNING_PID
+/project/activator-defaults-shim.sbt
+/project/activator-eclipse-shim.sbt
+/project/activator-idea-shim.sbt

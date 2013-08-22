@@ -1,6 +1,6 @@
 import com.typesafe.sbt.SbtStartScript 
 
-name := "Lift 2.5 samples"
+name := "lift_25_samples"
 
 version := "0.0.1"
 
