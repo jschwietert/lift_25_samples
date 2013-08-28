@@ -1,13 +1,61 @@
 <html>
 <head>
-<title>Lift 2.5 Samples</title>
+    <title>Lift 2.5 Samples</title>
 </head>
 <body>
 <div>
-<h2>Lift 2.5 Samples</h2>
-<p>
-Open the application at: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>
-</p>
+    <h2>Lift 2.5 Samples</h2>
+    <p>
+        Since the samples already provide a walkthrough, this tutorial will serve as a code
+        file index for each section of the samples application.
+        <!--TODO: While providing an index to the code files we will also provide some
+        high level walkthroughs of how Lift uses these files to produce the final markup for the client.-->
+    </p>
+    <p>
+        If you aren't familiar with Lift's view-first pattern it is recommended to read the framework
+        <a href="http://liftweb.net/lift_overview" target="_blank">overview</a>.
+    </p>
+    <p>
+        <tiny>Click → to begin.</tiny>
+    </p>
+    <p>
+        <br><br>
+        <b>References:</b>
+        <dl>
+            <dt style="margin-left: 15px;">Lift Homepage</dt>
+            <dd style="margin-left: 45px;"><a href="http://liftweb.net/" target="_blank">http://liftweb.net</a></dd>
+            <dt style="margin-left: 15px;">Lift Overview</dt>
+            <dd style="margin-left: 45px;"><a href="http://liftweb.net/lift_overview" target="_blank">http://liftweb.net/lift_overview</a></dd>
+        </dl>
+    </p>
+</div>
+<div>
+    <h2>Introduction</h2>
+    <p>
+        Open the application at: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>.
+    </p>
+    <p>
+        The Lift framework uses a view-first pattern. Lets look at how this is utilized to produce
+        the content pages.
+    </p>
+    <p>
+        From <a href="#code/src/main/webapp/index.html" class="shortcut">/src/main/webapp/index.html</a> notice
+        the first line:
+        <pre>&lt;lift:surround with="default" at="content"&gt;</pre>
+        This is telling Lift to wrap itself with the
+        <a href="#code/src/main/webapp/templates-hidden/default.html" class="shortcut">/src/main/webapp/templates-hidden/default.html</a>
+        template at the <i>content</i> tag:
+        <pre>&lt;lift:bind name="content"&gt;&lt;/lift:bind&gt;</pre>
+
+        <br>
+        To be continued...
+    </p>
+</div>
+<div>
+    <h2>Samples: Home</h2>
+    <p>
+        Coming soon.
+    </p>
 </div>
 </body>
 </html>
