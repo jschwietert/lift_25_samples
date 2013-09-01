@@ -6,55 +6,111 @@
 <div>
     <h2>Lift 2.5 Samples</h2>
     <p>
-        Since the samples already provide a walkthrough, this tutorial will serve as a code
-        file index for each section of the samples application.
-        <!--TODO: While providing an index to the code files we will also provide some
-        high level walkthroughs of how Lift uses these files to produce the final markup for the client.-->
+        Since the samples already provide a walkthrough of features, this tutorial will provide a
+        high level walkthrough of how Lift uses the template system to produce the final markup for the client.
+        Once this is understood, you should have enough understanding to navigate the application code.
     </p>
     <p>
-        If you aren't familiar with Lift's view-first pattern it is recommended to read the framework
-        <a href="http://liftweb.net/lift_overview" target="_blank">overview</a>.
+        This application makes heavy use of the features that Lift provides, even on the Home page.
+        If you aren't familiar with Lift or its view-first pattern consider reading section 1.2 of
+        the first (free) chapter of Timothy Perrett's book
+        <i><a href="http://manning.com/perrett/Sample_ch01_Lift.pdf" target="_blank">Lift in Action</a></i>.
+        Also check out the <a href="http://cookbook.liftweb.net/" target="_blank">Lift Cookbook</a> which provides lots of great
+        problem-solution writeups to help developers learn how to solve problems using the Lift framework.
     </p>
     <p>
-        <tiny>Click → to begin.</tiny>
+        Open the application at <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>, then click → above to begin.
     </p>
     <p>
-        <br><br>
+        <br>
         <b>References:</b>
         <dl>
             <dt style="margin-left: 15px;">Lift Homepage</dt>
             <dd style="margin-left: 45px;"><a href="http://liftweb.net/" target="_blank">http://liftweb.net</a></dd>
-            <dt style="margin-left: 15px;">Lift Overview</dt>
-            <dd style="margin-left: 45px;"><a href="http://liftweb.net/lift_overview" target="_blank">http://liftweb.net/lift_overview</a></dd>
+            <dt style="margin-left: 15px;"><i>Lift in Action</i> by Timothy Perrett</dt>
+            <dd style="margin-left: 45px;"><a href="http://manning.com/perrett/" target="_blank">http://manning.com/perrett/</a></dd>
+            <dt style="margin-left: 15px;">Lift Cookbook</dt>
+            <dd style="margin-left: 45px;"><a href="http://cookbook.liftweb.net/" target="_blank">http://cookbook.liftweb.net/</a></dd>
+            <dt style="margin-left: 15px;">Lift 2.5 Samples - Activator Template</dt>
+            <dd style="margin-left: 45px;"><a href="https://github.com/jschwietert/lift_25_samples" target="_blank">https://github.com/jschwietert/lift_25_samples</a></dd>
+        </dl>
+    </p>
+    <p>
+        <br>
+        Got feedback? Submit an <a href="https://github.com/jschwietert/lift_25_samples/issues" target="_blank">issue</a> or contact me with suggestions.
+    </p>
+    <p>
+        <br>
+        <b>References predating Lift 2.5</b>
+        <dl>
+            <dt style="margin-left: 15px;"><i>Exploring Lift</i> by Derek Chen-Becker, Marius Danciu and Tyler Weir</dt>
+            <dd style="margin-left: 45px;"><a href="http://exploring.liftweb.net/master/index.html" target="_blank">http://exploring.liftweb.net/master/index.html</a></dd>
+            <dt style="margin-left: 15px;"><i>Simply Lift</i> by David Pollak</dt>
+            <dd style="margin-left: 45px;"><a href="http://exploring.liftweb.net/master/index.html" target="_blank">http://exploring.liftweb.net/master/index.html</a></dd>
         </dl>
     </p>
 </div>
 <div>
-    <h2>Introduction</h2>
+    <h2>Page: Home</h2>
     <p>
-        Open the application at: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>.
+        The front page of this application is a great example of Lift's templates and view-first pattern.
+        In order to better understand Lift's templating mechanism please read through the <a href="http://localhost:8080/templating/" target="_blank">Templating</a> section of this application.
+        Now, lets look at how this is utilized to produce each content area on the front page.
     </p>
     <p>
-        The Lift framework uses a view-first pattern. Lets look at how this is utilized to produce
-        the content pages.
+        Notice the first line of <a href="#code/src/main/webapp/index.html" class="shortcut">index.html</a>:
+        <code>&lt;lift:surround with="default" at="content"&gt;</code>. This is a snippet invocation which gives the tag's children
+        along with the attributes of the <code>lift:surround</code> tag
+        to one of Lift's builtin snippets <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/Surround.scala" target="_blank">Surround.scala</a>.
+        The surround snippet first invokes any snippets found in the given children then inserts the resultant HTML into the template.
+        It does this by using the <code>with</code> and <code>at</code> attributes from the snippet invocation which identify the template name and replacement location, respectively.
+        The replacement location must be a <code>lift:bind</code> tag having a <code>name</code> attribute. In this case the index.html template is surrounded by the <a href="#code/src/main/webapp/templates-hidden/default.html" class="shortcut">default.html</a>
+        template at the <code>lift:bind</code> tag named "content": <code>&lt;lift:bind name="content"&gt;&lt;/lift:bind&gt;</code>.
     </p>
     <p>
-        From <a href="#code/src/main/webapp/index.html" class="shortcut">/src/main/webapp/index.html</a> notice
-        the first line:
-        <pre>&lt;lift:surround with="default" at="content"&gt;</pre>
-        This is telling Lift to wrap itself with the
-        <a href="#code/src/main/webapp/templates-hidden/default.html" class="shortcut">/src/main/webapp/templates-hidden/default.html</a>
-        template at the <i>content</i> tag:
-        <pre>&lt;lift:bind name="content"&gt;&lt;/lift:bind&gt;</pre>
-
-        <br>
-        To be continued...
+        At this point you may have noticed that the index.html included only one other lift snippet invocation: <code>&lt;span data-lift="github.js"&gt;&lt;/span&gt;</code>.
+        This looks different than the previous snippet invocation for two reasons: the <code>data-lift</code> attribute is the new preferred way to invoke snippets; the github snippet is a DispatchSnippet.
+        A DispatchSnippet is one where the template can invoke methods by name instead of a regular snippet (like Surround.scala) which provide only one <code>render</code> method.
+        In this case, the <code>js</code> method from the <code>Github</code> class is being invoked to return javascript which will prepare the page to use google-code-prettify.
     </p>
 </div>
 <div>
-    <h2>Samples: Home</h2>
+    <h2>Page: Home...</h2>
     <p>
-        Coming soon.
+        Now that we've examined index.html, lets take a look at what's happening after lift surrounds it with the <a href="#code/src/main/webapp/templates-hidden/default.html" class="shortcut">default.html</a> template.
+    </p>
+    <p>
+        Starting at the top of the file, we can see that this template defines the layout of this application.
+        From the basics we reviewed in the previous section you should now be able to walk through this file,
+        locate each snippet & method, identify what the snippet invocation is doing, and determine what the resultant HTML will be.
+    </p>
+    <p>
+        To get you started, here is the index for all snippet calls:
+        <ol>
+            <li>Menu.title (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/Menu.scala?source=c#L240" target="_blank">Menu.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.Menu$" target="_blank">scaladoc</a>)
+            </li>
+            <li>CSS.blueprint (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/CSS.scala?source=c#L33" target="_blank">CSS.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.CSS$" target="_blank">scaladoc</a>)
+            </li>
+            <li>CSS.fancytype (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/CSS.scala?source=c#L58" target="_blank">CSS.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.CSS$" target="_blank">scaladoc</a>)
+            </li>
+            <li>Menu.builder (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/Menu.scala?source=c#L52" target="_blank">Menu.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.Menu$" target="_blank">scaladoc</a>)
+            </li>
+            <li>Comet?type=Clock (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/Comet.scala?source=c#L33" target="_blank">Comet.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.Comet$" target="_blank">scaladoc</a>) -
+                <a href="#code/src/main/scala/net/liftweb/example/comet/Clock.scala" class="shortcut">Clock.scala</a>
+            </li>
+            <li>Comet?type=Chat (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/Comet.scala?source=c#L33" target="_blank">Comet.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.Comet$" target="_blank">scaladoc</a>) -
+                <a href="#code/src/main/scala/net/liftweb/example/comet/Chat.scala" class="shortcut">Chat.scala</a>
+            </li>
+            <li>Msgs (Lift Snippet) - <a href="https://github.com/lift/framework/blob/2.5.1/web/webkit/src/main/scala/net/liftweb/builtin/snippet/Msgs.scala?source=c#L63" target="_blank">Msgs.scala</a>
+                (<a href="http://liftweb.net/api/25/api/#net.liftweb.builtin.snippet.Msgs$" target="_blank">scaladoc</a>)
+            </li>
+        </ol>
     </p>
 </div>
 </body>
